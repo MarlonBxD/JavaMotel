@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package VIsta;
 
 
@@ -13,12 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 
-
-
-/**
- *
- * @author marlo
- */
 public class Hpanel extends javax.swing.JPanel {
 
     private Habitacion habitacion1;
@@ -33,35 +24,15 @@ public class Hpanel extends javax.swing.JPanel {
     
     public Hpanel() {
         initComponents();
-        habitacion1 = new Habitacion(1, ""); // Placa vacía inicialmente
+        habitacion1 = new Habitacion(1, ""); 
         habitacion2 = new Habitacion(2, "");
         habitacion3 = new Habitacion(3, "");
         habitacion4 = new Habitacion(4, "");
         habitacion5 = new Habitacion(5, "");
         habitacion6 = new Habitacion(6, "");
-        btnHabitacion1.setEnabled(false);
-        btnHabitacion2.setEnabled(false);
-        btnHabitacion3.setEnabled(false);
-        btnHabitacion4.setEnabled(false);
-        btnHabitacion5.setEnabled(false);
-        btnHabitacion6.setEnabled(false);
-        
-        
-        
+       
     }    
     
-    public void activarbtn(JButton botonHabitacion) {
-        // Crear un array con todos los botones de las habitaciones
-        JButton[] botonesHabitaciones = {btnHabitacion1, btnHabitacion2, btnHabitacion3, btnHabitacion4, btnHabitacion5, btnHabitacion6};
-
-        // Iterar sobre los botones para encontrar el que se debe deshabilitar
-        for (JButton boton : botonesHabitaciones) {
-            if (boton == botonHabitacion) {
-                boton.setEnabled(false);  // Deshabilitar el botón correspondiente
-                break;  // Salir del bucle una vez que se haya deshabilitado el botón
-            }
-        }
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -82,8 +53,9 @@ public class Hpanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
-        btnHabitacion1.setBackground(new java.awt.Color(91, 236, 14));
+        btnHabitacion1.setBackground(new java.awt.Color(172, 255, 166));
         btnHabitacion1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHabitacion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.png"))); // NOI18N
         btnHabitacion1.setText("Habitacion 1 - Libre");
         btnHabitacion1.setToolTipText("");
         btnHabitacion1.addActionListener(new java.awt.event.ActionListener() {
@@ -92,8 +64,9 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
-        btnHabitacion2.setBackground(new java.awt.Color(91, 236, 14));
+        btnHabitacion2.setBackground(new java.awt.Color(172, 255, 166));
         btnHabitacion2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHabitacion2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.png"))); // NOI18N
         btnHabitacion2.setText("Habitacion 2 - Libre");
         btnHabitacion2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,8 +74,9 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
-        btnHabitacion3.setBackground(new java.awt.Color(91, 236, 14));
+        btnHabitacion3.setBackground(new java.awt.Color(172, 255, 166));
         btnHabitacion3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHabitacion3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.png"))); // NOI18N
         btnHabitacion3.setText("Habitacion  3- Libre");
         btnHabitacion3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,8 +84,9 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
-        btnHabitacion4.setBackground(new java.awt.Color(91, 236, 14));
+        btnHabitacion4.setBackground(new java.awt.Color(172, 255, 166));
         btnHabitacion4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHabitacion4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.png"))); // NOI18N
         btnHabitacion4.setText("Habitacion 4 - Libre");
         btnHabitacion4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,8 +94,9 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
-        btnHabitacion5.setBackground(new java.awt.Color(91, 236, 14));
+        btnHabitacion5.setBackground(new java.awt.Color(172, 255, 166));
         btnHabitacion5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHabitacion5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.png"))); // NOI18N
         btnHabitacion5.setText("Habitacion 5 - Libre");
         btnHabitacion5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,8 +104,9 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
-        btnHabitacion6.setBackground(new java.awt.Color(91, 236, 14));
+        btnHabitacion6.setBackground(new java.awt.Color(172, 255, 166));
         btnHabitacion6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnHabitacion6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cama.png"))); // NOI18N
         btnHabitacion6.setText("Habitacion 6 - Libre");
         btnHabitacion6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +122,7 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
+        btnCobrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/US-dollar.png"))); // NOI18N
         btnCobrar.setText("Cobrar");
         btnCobrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +138,7 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
+        btnInicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Enter_41039.png"))); // NOI18N
         btnInicar.setText("inciar");
         btnInicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,44 +150,45 @@ public class Hpanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnHabitacion1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                    .addComponent(btnHabitacion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(55, 55, 55)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnHabitacion2, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                    .addComponent(btnHabitacion5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnHabitacion3, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                    .addComponent(btnHabitacion6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29))
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(btnInicar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnAgregarP, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(187, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnHabitacion4, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                            .addComponent(btnHabitacion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnHabitacion2, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                            .addComponent(btnHabitacion5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnHabitacion6, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnHabitacion3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(btnInicar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarP, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnHabitacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHabitacion2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHabitacion3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnHabitacion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHabitacion2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHabitacion3))
                 .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(btnHabitacion5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHabitacion4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHabitacion6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHabitacion5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHabitacion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHabitacion6))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(131, 131, 131)
@@ -369,7 +349,6 @@ public class Hpanel extends javax.swing.JPanel {
                     // Aquí pasas el número de habitación y el botón al método iniciarHabitacion
                     JButton botonHabitacion = obtenerBotonHabitacion(numeroHabitacion);  // Método para obtener el botón correspondiente
                     habitacionSeleccionada.iniciarHabitacion(numeroHabitacion, botonHabitacion);
-                    activarbtn(botonHabitacion);
                 } else {
                     JOptionPane.showMessageDialog(this, "No se ha encontrado la habitación.");
                 }

@@ -129,10 +129,7 @@ public class Habitacion {
         this.fechaHoraInicio = fechaHoraInicio;
     }
     
-
     // Métodos
-    
-    
     public String tomarTiempoOcupacion() {
         if (ocupada) {
             long elapsedTime = (System.currentTimeMillis() / 1000) - startTime;
@@ -152,7 +149,7 @@ public class Habitacion {
         startTime = 0;
         historial.clear(); // Limpiar el historial de cobros y productos consumidos
         fechaHoraInicio = null; // Reiniciar la fecha de inicio
-        numhabitacion.setBackground(Color.GREEN);
+        numhabitacion.setBackground(new Color(172, 255, 166));
     }
 
     // Método para validar la placa
@@ -195,7 +192,7 @@ public class Habitacion {
                         try {
                             SwingUtilities.invokeLater(() -> {
                                 String tiempoOcupacion = tomarTiempoOcupacion();
-                                botonHabitacion.setText("Habitación " + numeroHabitacion + " - Tiempo: " + tiempoOcupacion);
+                                botonHabitacion.setText("Habitación " + numeroHabitacion + " - " + tiempoOcupacion);
                             });
                         } catch (Exception e) {
                             System.err.println("Error al actualizar el tiempo de ocupación: " + e.getMessage());
@@ -260,6 +257,11 @@ public class Habitacion {
         DecimalFormat df = new DecimalFormat("#.00");
         long tiempoTranscurrido = (System.currentTimeMillis() / 1000) - startTime;
         double horas = tiempoTranscurrido / 3600.0;
+        double minutos = tiempoTranscurrido / 60.0;
+        if(minutos <= 5){
+            JOptionPane.showMessageDialog(null, "EL tempo de ocupacion es de 5");
+            return 0;
+        }else {
         double totalPorTiempo = horas * precioPorHora;
         String archivoProductos = "Productos.csv";
         double totalProductos = 0.0;
@@ -342,7 +344,7 @@ public class Habitacion {
 
         // Mostrar el cobro en el cuadro de diálogo
         JOptionPane.showMessageDialog(null, detallesCobro.toString());
-        return totalPorTiempo + totalProductos;
+        return totalPorTiempo + totalProductos;}
     }
 
 
