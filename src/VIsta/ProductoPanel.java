@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package VIsta;
 
+import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -351,6 +349,7 @@ public class ProductoPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error al cargar los productos: " + e.getMessage());
         }
     }
+    
     void limpiarTb(){
         
         txtNombrep.setText(null);

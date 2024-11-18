@@ -3,16 +3,15 @@ package VIsta;
 
 import java.awt.BorderLayout;
 
-/**
- *
- * @author marlo
- */
-public class DashBorad extends javax.swing.JFrame {
 
+public class DashBorad extends javax.swing.JFrame {
+    ProductoPanel pp;
+    Hpanel hp;
    
     public DashBorad() {
         initComponents();
-        Hpanel hp=new Hpanel();
+        hp=new Hpanel();
+        pp=new ProductoPanel();
         hp.setSize(910, 730);
         hp.setLocation(0, 0);
         
@@ -149,7 +148,7 @@ public class DashBorad extends javax.swing.JFrame {
 
     private void btnHabitacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabitacionesActionPerformed
         
-        Hpanel hp=new Hpanel();
+        
         hp.setSize(910, 730);
         hp.setLocation(0, 0);
         
@@ -161,7 +160,7 @@ public class DashBorad extends javax.swing.JFrame {
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         
-        ProductoPanel pp=new ProductoPanel();
+        
         pp.setSize(910, 730);
         pp.setLocation(0, 0);
         
