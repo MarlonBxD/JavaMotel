@@ -49,6 +49,7 @@ public class Hpanel extends javax.swing.JPanel {
         btnCobrar = new javax.swing.JButton();
         btnHistorial = new javax.swing.JButton();
         btnInicar = new javax.swing.JButton();
+        btnMover = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -146,14 +147,32 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
+        btnMover.setText("Mover");
+        btnMover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addComponent(btnInicar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarP, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCobrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnMover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(72, 72, 72))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnHabitacion4, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
                             .addComponent(btnHabitacion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -164,17 +183,8 @@ public class Hpanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnHabitacion6, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnHabitacion3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(btnInicar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAgregarP, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                            .addComponent(btnHabitacion3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(52, 52, 52))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,17 +199,16 @@ public class Hpanel extends javax.swing.JPanel {
                     .addComponent(btnHabitacion5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHabitacion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHabitacion6))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(126, 126, 126)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInicar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCobrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAgregarP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCobrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(btnInicar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(241, 241, 241))
+                        .addGap(1, 1, 1)
+                        .addComponent(btnMover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(262, 262, 262))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -273,7 +282,7 @@ public class Hpanel extends javax.swing.JPanel {
                         habitacionSeleccionada.reiniciar(obtenerBotonHabitacion(numeroHabitacion));
                         
                     } else {
-                        JOptionPane.showMessageDialog(null, "El cobro ha sido cancelado.", "Cobro cancelado", JOptionPane.WARNING_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "El cobro ha sido cancelado.", "Cobro cancelado", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "No se ha encontrado la habitación.");
@@ -333,7 +342,7 @@ public class Hpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnHabitacion1ActionPerformed
 
     private void btnInicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicarActionPerformed
-         String numeroHabitacionStr = JOptionPane.showInputDialog("Ingrese el número de la habitación:");
+        String numeroHabitacionStr = JOptionPane.showInputDialog("Ingrese el número de la habitación:");
 
         // Verificar si el usuario ha cancelado el cuadro de diálogo
         if (numeroHabitacionStr != null && !numeroHabitacionStr.trim().isEmpty()) {
@@ -361,6 +370,40 @@ public class Hpanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese un número de habitación válido.");
         }
     }//GEN-LAST:event_btnInicarActionPerformed
+
+    private void btnMoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActionPerformed
+       
+        String hOrigen = JOptionPane.showInputDialog("Ingrese el número de la habitación:");
+        String hDestino =JOptionPane.showInputDialog(null, "ingrese el numero de la habitacion destino");
+        // Verificar si el usuario ha cancelado el cuadro de diálogo
+        if (hOrigen != null && !hOrigen.trim().isEmpty()|| hOrigen != null && !hOrigen.trim().isEmpty() ) {
+            try {
+                // Validar que el número de la habitación sea numérico
+                int nHOrigen = Integer.parseInt(hOrigen);
+                int nHDestino = Integer.parseInt(hDestino);
+
+                // Llamar al método para asignar la habitación seleccionada
+                Habitacion hOrigenSelec = asignarHabitacion(nHOrigen);
+                Habitacion hDestinoSelec = asignarHabitacion(nHDestino);
+                // Verificar si la habitación es válida
+                if (hOrigenSelec != null ||hDestinoSelec != null) {
+                    // Aquí pasas el número de habitación y el botón al método iniciarHabitacion
+                    JButton botonHabitacionorigen = obtenerBotonHabitacion(nHOrigen);  // Método para obtener el botón correspondiente
+                    JButton botonHabitaciondestino = obtenerBotonHabitacion(nHDestino);
+                    hOrigenSelec.mover(hDestinoSelec, hOrigenSelec, botonHabitacionorigen, botonHabitaciondestino);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se ha encontrado la habitación.");
+                }
+            } catch (NumberFormatException ex) {
+                // Manejar el caso en que el valor ingresado no es un número válido
+                JOptionPane.showMessageDialog(this, "El número de la habitación debe ser un valor numérico.");
+            }
+        } else {
+            // Si el usuario no ha ingresado nada o ha presionado Cancelar
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un número de habitación válido.");
+        }
+                
+    }//GEN-LAST:event_btnMoverActionPerformed
 
     
     private Habitacion asignarHabitacion(int numeroHabitacion) {
@@ -400,6 +443,7 @@ public class Hpanel extends javax.swing.JPanel {
     private javax.swing.JButton btnHabitacion6;
     private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnInicar;
+    private javax.swing.JButton btnMover;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

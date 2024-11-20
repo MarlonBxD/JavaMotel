@@ -150,6 +150,9 @@ public class Habitacion {
         historial.clear(); // Limpiar el historial de cobros y productos consumidos
         fechaHoraInicio = null; // Reiniciar la fecha de inicio
         numhabitacion.setBackground(new Color(172, 255, 166));
+        
+        
+        
     }
 
     // Método para validar la placa
@@ -211,10 +214,10 @@ public class Habitacion {
     
     // Método para mostrar el historial
     public String mostrarHistorial() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        
         StringBuilder sb = new StringBuilder();
         sb.append("Número de habitación: ").append(numero).append("\n");
-        sb.append("Fecha y hora de inicio: ").append(sdf.format(fechaHoraInicio)).append("\n");
+        //sb.append("Fecha y hora de inicio: ").append(sdf.format(fechaHoraInicio)).append("\n");
         sb.append("Productos consumidos:\n");
 
         // Agregar los productos consumidos
@@ -258,10 +261,23 @@ public class Habitacion {
         long tiempoTranscurrido = (System.currentTimeMillis() / 1000) - startTime;
         double horas = tiempoTranscurrido / 3600.0;
         double minutos = tiempoTranscurrido / 60.0;
-        if(minutos <= 5){
-            JOptionPane.showMessageDialog(null, "EL tempo de ocupacion es de 5");
-            return 0;
-        }else {
+
+        // Verificar si el tiempo es menor o igual a 5 minutos
+        if (minutos <= 5) {
+            // Mostrar cuadro de confirmación
+            int confirmacion = JOptionPane.showConfirmDialog(null, 
+                "El tiempo de ocupación es de solo " + df.format(minutos) + " minutos. ¿Desea proceder con el cobro?", 
+                "Confirmar cobro", 
+                JOptionPane.YES_NO_OPTION);
+
+            // Si el usuario selecciona "No", cancelar el cobro
+            if (confirmacion == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null, "Cobro cancelado.");
+                return 0.0;
+            }
+        }
+
+        // Si el tiempo es mayor a 5 minutos o el usuario confirma el cobro
         double totalPorTiempo = horas * precioPorHora;
         String archivoProductos = "Productos.csv";
         double totalProductos = 0.0;
@@ -344,9 +360,9 @@ public class Habitacion {
 
         // Mostrar el cobro en el cuadro de diálogo
         JOptionPane.showMessageDialog(null, detallesCobro.toString());
-        return totalPorTiempo + totalProductos;}
+        //historial.add(detallesCobro.toString());
+        return totalPorTiempo + totalProductos;
     }
-
 
 
     public static double obtenerPrecioProducto(String nombreProducto, String archivo) {
@@ -446,5 +462,38 @@ public class Habitacion {
         }
     }
       
+    public void mover(Habitacion habitacionDestino, Habitacion habitacionOrigen, JButton botonHabitacionOrigen, JButton botonHabitacionDestino) {
+        if (habitacionOrigen.isOcupada()) {            
+            habitacionDestino.setProductos(new ArrayList<>(habitacionOrigen.getProductos()));            
+            habitacionDestino.setTimer(habitacionOrigen.getTimer());            
+            habitacionDestino.setStartTime(habitacionOrigen.getStartTime());            
+            habitacionDestino.setOcupada(true);
+            botonHabitacionDestino.setBackground(Color.BLUE); // Por ejemplo, color azul para la habitación ocupada
+            botonHabitacionDestino.setText("Ocupada");
+            reiniciar(botonHabitacionOrigen);
+            botonHabitacionOrigen.setText("Habitación " + habitacionOrigen.getNumero() + " - Libre" );
+            if (habitacionDestino.getTimer() != null) {
+                habitacionDestino.getTimer().cancel(); // Detener cualquier temporizador anterior
+            }
+            Timer timer = new Timer();
+            habitacionDestino.setTimer(timer); // Guardar el nuevo temporizador
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    SwingUtilities.invokeLater(() -> {
+                        // Actualizar el tiempo de ocupación de la habitación destino
+                        String tiempoOcupacion = habitacionDestino.tomarTiempoOcupacion();
+                        botonHabitacionDestino.setText("Habitación " + habitacionDestino.getNumero() + " - " + tiempoOcupacion);
+                    });
+                }
+            }, 0, 1000); // Actualizar cada segundo
+        }
+    }
+
+
+
+
     
+
 }
+
