@@ -12,19 +12,15 @@ import javax.swing.JOptionPane;
 
 public class Procesos {
     
-      
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    private String cargo;
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
     
     
     
@@ -57,9 +53,11 @@ public class Procesos {
             String linea;
             while ((linea = reader.readLine()) != null) {
                 String[] datos = linea.split(",");
-                if (datos.length >= 2) {
+                if (datos.length >= 5) {
                     String nombreArchivo = datos[3];     // Asumiendo que el nombre está en la columna 3
                     String contrasenaArchivo = datos[4]; // Asumiendo que la contraseña está en la columna 4
+                     cargo= datos[1];
+                     System.out.println(cargo);
 
                     // Verifica si el nombre y la contraseña coinciden
                     if (nombre.equals(nombreArchivo) && contrasena.equals(contrasenaArchivo)) {

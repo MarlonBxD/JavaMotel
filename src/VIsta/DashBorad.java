@@ -3,25 +3,29 @@ package VIsta;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import Controlador.Procesos;
+import javax.swing.JOptionPane;
 
 
 public class DashBorad extends javax.swing.JFrame {
     ProductoPanel pp;
     Hpanel hp;
+    Procesos pro;
    
     public DashBorad() {
-        String nomreUsuario = "Marlon Buelvas";
+        pro=new Procesos();
         initComponents();
+        txtUsuario.setText( pro.getCargo());
         hp=new Hpanel();
         pp=new ProductoPanel();
         hp.setSize(910, 730);
-        hp.setLocation(0, 0);
+        hp.setLocation(0, 0);   
         
         content.removeAll();
         content.add(hp, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-        txtUsuario.setText(nomreUsuario);
+        
     }
 
 
@@ -44,25 +48,24 @@ public class DashBorad extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 255));
 
-        txtUsuario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtUsuario.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        txtUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/circulo-de-usuario.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(709, Short.MAX_VALUE)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addContainerGap(702, Short.MAX_VALUE)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(txtUsuario)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 910, 70));
@@ -168,22 +171,30 @@ public class DashBorad extends javax.swing.JFrame {
         
         hp.setSize(910, 730);
         hp.setLocation(0, 0);
-        
+
         content.removeAll();
         content.add(hp, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
+                
     }//GEN-LAST:event_btnHabitacionesActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
           
-        pp.setSize(910, 730);
-        pp.setLocation(0, 0);
-        
-        content.removeAll();
-        content.add(pp, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+        if (pro.getCargo() != null && pro.getCargo().contains("ADMIN")) {
+            
+            pp.setSize(910, 730);
+            pp.setLocation(0, 0);
+
+            content.removeAll();
+            content.add(pp, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        } else {
+            
+            JOptionPane.showMessageDialog(null,"El usuario no tiene permisos de administrador.");
+            
+        }
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnHabitacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHabitacionesMouseEntered
