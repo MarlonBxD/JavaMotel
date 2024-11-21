@@ -15,7 +15,9 @@ public class DashBorad extends javax.swing.JFrame {
     public DashBorad() {
         pro=new Procesos();
         initComponents();
-        txtUsuario.setText( pro.getCargo());
+        String cargo = pro.getCargo();
+        txtUsuario.setText(cargo);
+        txtUsuario.setForeground(Color.WHITE);
         hp=new Hpanel();
         pp=new ProductoPanel();
         hp.setSize(910, 730);
