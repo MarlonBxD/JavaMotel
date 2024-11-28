@@ -258,7 +258,12 @@ public class Habitacion {
         if (ocupada) {
             long elapsedTime = (System.currentTimeMillis() / 1000) - startTime; // Tiempo en segundos
             double tiempoOcupacion = elapsedTime / 3600.0; // Convertir a horas (puede incluir fracciones)
+            double tiempoMinutos = elapsedTime / 60.0;
             costoTotal += tiempoOcupacion * this.precioPorHora; // Costo por tiempo de ocupación
+            if (tiempoMinutos <=5){
+                JOptionPane.showMessageDialog(null, "el timepo de la hbaitacion es menor a 5 minutos");
+                costoTotal =0;
+            }
         }
 
         double totalProductos = 0.0;
@@ -283,28 +288,9 @@ public class Habitacion {
     }
 
     
-
-    // Método para generar la factura (opcional)
-    public String detalleFactura() {
-        StringBuilder factura = new StringBuilder();
-        long endTime = System.currentTimeMillis();
-        factura.append("Factura de la habitación: ").append(this.numero).append("\n");
-        factura.append("Placa del vehículo: ").append(this.placaVehiculo).append("\n");
-        factura.append("Tiempo de ocupación: ").append(tomarTiempoOcupacion()).append("\n");
-        factura.append("Productos consumidos:\n");
-        for (int i = 0; i < this.productos.size(); i++) {
-            factura.append(this.productos.get(i)).append(" x ").append(this.cantidades.get(i)).append("\n");
-        }
-        factura.append("Costo total: ").append(calcularCostoTotal()).append("\n");
-        return factura.toString();
-    }
-    
     public void cobrar(JButton boton) throws DocumentException {
         // Calcular el costo total
         double total = calcularCostoTotal();
-
-        // Detalle de la factura
-        String detalle = detalleFactura();
 
         // Mostrar confirmación de cobro
         int confirmar = JOptionPane.showConfirmDialog(null, "Total a pagar: $" + total + "\n¿Desea generar la factura?", "Confirmar Cobro", JOptionPane.YES_NO_OPTION);

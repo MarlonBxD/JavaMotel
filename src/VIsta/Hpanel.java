@@ -5,9 +5,12 @@ package VIsta;
 import Controlador.Procesos;
 import Modelo.Habitacion;
 import Modelo.Producto;
+import com.lowagie.text.DocumentException;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -311,23 +314,31 @@ public class Hpanel extends javax.swing.JPanel {
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         try {
-            String numeroHabitacionStr = JOptionPane.showInputDialog("Ingrese el número de la habitación:");
-            if (numeroHabitacionStr != null && numeroHabitacionStr.matches("\\d+")) {
-                int numeroHabitacion = Integer.parseInt(numeroHabitacionStr);
-                Habitacion habitacionSeleccionada = asignarHabitacion(numeroHabitacion);
-                JButton botonHabitacion = obtenerBotonHabitacion(numeroHabitacion);
-                if (habitacionSeleccionada != null) {
-                    habitacionSeleccionada.cobrar(botonHabitacion);
-                    
+        String numeroHabitacionStr = JOptionPane.showInputDialog("Ingrese el número de la habitación:");
+        if (numeroHabitacionStr != null && numeroHabitacionStr.matches("\\d+")) {
+            int numeroHabitacion = Integer.parseInt(numeroHabitacionStr);
+            Habitacion habitacionSeleccionada = asignarHabitacion(numeroHabitacion);
+            JButton botonHabitacion = obtenerBotonHabitacion(numeroHabitacion);
+            
+            if (habitacionSeleccionada != null) {
+                if (habitacionSeleccionada.isOcupada()) { // Verifica si la habitación está ocupada
+                    try {
+                        habitacionSeleccionada.cobrar(botonHabitacion);
+                    } catch (DocumentException ex) {
+                        Logger.getLogger(Hpanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "No se ha encontrado la habitación.");
+                    JOptionPane.showMessageDialog(null, "La habitación no está ocupada. No se puede realizar el cobro.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "El número de habitación debe ser un valor numérico.");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado la habitación.");
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El número de la habitación debe ser un valor numérico.");
+        } else {
+            JOptionPane.showMessageDialog(null, "El número de habitación debe ser un valor numérico.");
         }
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "El número de la habitación debe ser un valor numérico.");
+    }
     }//GEN-LAST:event_btnCobrarActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed

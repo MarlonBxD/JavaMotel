@@ -107,7 +107,7 @@ public class Factura {
                .append("         FACTURA N° ").append(numeroFactura).append("\n")
                .append("====================================\n")
                .append("Habitación: ").append(habitacion.getNumero()).append("\n")
-               .append("Placa del vehículo: ").append(habitacion.getPlacaVehiculo()).append("\n")
+               .append("Placa del vehículo: ").append(habitacion.getPlacaVehiculo().toUpperCase()).append("\n")
                .append("Tiempo: ").append(habitacion.tomarTiempoOcupacion()).append("\n")
                .append("Fecha: ").append(fechaFormateada).append("\n")
                .append("====================================\n")
@@ -122,11 +122,11 @@ public class Factura {
         }
 
         tirilla.append("====================================\n")
-               .append("TOTAL: $").append(String.format("%.2f", habitacion.calcularCostoTotal())).append("\n")
+               .append("TOTAL: $").append(String.format("%.2f", getTotal())).append("\n")
                .append("====================================\n")
                .append("      ¡Gracias por su visita!      \n")
                .append("====================================\n")
-               .append("              MotelApp             \n");
+               .append("                 MotelApp             \n");
 
         // Guardar factura en PDF
         guardarFacturaComoPdf(numeroFactura, fechaFormateada, tirilla.toString());
