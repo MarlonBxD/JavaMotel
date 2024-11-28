@@ -1,12 +1,10 @@
 
 package VIsta;
 
-import java.awt.BorderLayout;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import Controlador.Procesos;
+import Modelo.Producto;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,14 +13,19 @@ import javax.swing.table.DefaultTableModel;
  * @author marlo
  */
 public class ProductoPanel extends javax.swing.JPanel {
-    int filaSeleccionada;
-    private DefaultTableModel model;
+    
+    DefaultTableModel dtm=new DefaultTableModel();
+    ArrayList<Producto> listaProduc;
+    int fila, col;
+    private String cargo;
     
     
-    public ProductoPanel() {
+    public ProductoPanel(String cargo) {
+        this.cargo = cargo;
         initComponents();
-        model = (DefaultTableModel) tbProductos.getModel();
-        cargarProductos();
+        dtm=(DefaultTableModel) tbProductos.getModel();
+        listaProduc=new ArrayList<Producto>();
+        mostrarTabla();
     }
 
     
@@ -182,9 +185,74 @@ public class ProductoPanel extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    void agregar() throws IOException{
+        Producto pdt=new Producto();
+        pdt.setNombre((String) txtNombrep.getText());
+        pdt.setPrecio(Double.parseDouble(txtPreciop.getText()));
+        pdt.setExistencia(Integer.parseInt(txtCantidadp.getText()));
+        
+        listaProduc.add(pdt);
+        Procesos.guardarProducto(listaProduc);
+    }
+    
+    void mostrarTabla(){
+        while(dtm.getRowCount()>0){
+        dtm.removeRow(0);
+        }
+        try {
+           listaProduc= Procesos.leerArchivoPorducto();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo leer el archivo ");
+        }
+        for (Producto p: listaProduc) {
+             Object datos[]=new Object[7];
+               datos[0]=p.getNombre();
+               datos[1]=p.getPrecio();
+               datos[2]=p.getExistencia();
+               
+               dtm.addRow(datos);//linea que muestra la informacion logica
+        }
+        tbProductos.setModel(dtm);
+    }
+    
+    void limpiarTb(){
+        
+        txtNombrep.setText(null);
+        txtPreciop.setText(null);
+        txtCantidadp.setText(null);
+    }
+    
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        modificarRegistro();
+        
+        if (cargo != null && cargo.equals("ADMINISTRADOR")) {
+            String nNombre,nPrecio,nExistencia;
+            
+            nNombre = txtNombrep.getText();
+            nPrecio = txtPreciop.getText();
+            nExistencia = txtCantidadp.getText();
+            
+            listaProduc.get(fila).setNombre(nNombre);
+            listaProduc.get(fila).setPrecio(Double.parseDouble(nPrecio));
+            listaProduc.get(fila).setExistencia(Integer.parseInt(nExistencia));
+            
+            dtm.setRowCount(0);
+            //mostrar el arraylist dentro del Jtable
+            for (int i = 0; i < listaProduc.size(); i++) {
+                Object[] objE={listaProduc.get(i).getNombre(),listaProduc.get(i).getNombre(),
+                               listaProduc.get(i).getExistencia()};
+                dtm.addRow(objE);
+                try {
+                    Procesos.guardarProducto(listaProduc);
+                    mostrarTabla();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, " No se pudo modificar");
+                }
+            }
+                   
+        } else {
+            JOptionPane.showMessageDialog(null, "El usuario no tiene permisos de administrador.");
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -194,55 +262,52 @@ public class ProductoPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         eliminarRegistro();
+        if (cargo != null && cargo.equals("ADMINISTRADOR")) {
+            int dialogButton=JOptionPane.YES_NO_OPTION;
+            int dialogResul=JOptionPane.showConfirmDialog(this,"Borrar datos","Borrar" ,dialogButton);
+            if(dialogResul==0){
+                dtm.removeRow(fila);
+                listaProduc.remove(fila); //lo borramos en arraylist
+                try {
+                      Procesos.guardarProducto(listaProduc);
+                      mostrarTabla();
+                  } catch (IOException ex) {
+                      JOptionPane.showMessageDialog(null, " No se pudo modificar");
+                  }
+                limpiarTb();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El usuario no tiene permisos de administrador.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String nom1 = txtNombrep.getText();
-        String nom = nom1.toUpperCase();
-        String precio = txtPreciop.getText();
-        String stock = txtCantidadp.getText();
-
-        if (nom.isEmpty() || precio.isEmpty() || stock.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        
+        if (cargo != null && cargo.equals("ADMINISTRADOR")) {
+            try {
+   
+            agregar();
+            mostrarTabla();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar en el archivo ");
         }
+           mostrarTabla();
+            limpiarTb();
 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String codigoExistente = model.getValueAt(i, 0).toString();  // Columna 0 es el código
-            if (codigoExistente.equalsIgnoreCase(nom)) {
-                JOptionPane.showMessageDialog(null, "El producto ya existe con el codigo ingresado.", "Error", JOptionPane.ERROR_MESSAGE);
-                limpiarTb();
-                return;
-            }
+            } else {
+                JOptionPane.showMessageDialog(null, "El usuario no tiene permisos de administrador.");
         }
-
-        float pre;
-        int cant;
-
-        try {
-            pre = Float.parseFloat(precio);
-            cant = Integer.parseInt(stock);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El precio y la cantidad deben ser valores numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Object[] pro = {nom, pre, cant};
-        model.addRow(pro);
-        guardarProductos();
-        limpiarTb();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
-        filaSeleccionada = tbProductos.getSelectedRow();
-
-        if (filaSeleccionada >= 0) {
         
-            txtNombrep.setText(model.getValueAt(filaSeleccionada, 0).toString());
-            txtPreciop.setText(model.getValueAt(filaSeleccionada, 1).toString());
-            txtCantidadp.setText(model.getValueAt(filaSeleccionada, 2).toString());
-        }
+        dtm=(DefaultTableModel) tbProductos.getModel();
+        fila=tbProductos.getSelectedRow();
+        txtNombrep.setText(dtm.getValueAt(fila, 0).toString());
+        txtPreciop.setText(dtm.getValueAt(fila, 1).toString());
+        txtCantidadp.setText(dtm.getValueAt(fila, 2).toString());
+        btnAgregar.setEnabled(false);
+        
     }//GEN-LAST:event_tbProductosMouseClicked
 
     public void buscarProducto(String valorBuscado) {
@@ -253,8 +318,8 @@ public class ProductoPanel extends javax.swing.JPanel {
 
         boolean encontrado = false;
 
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String nombre = model.getValueAt(i, 0).toString();  
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            String nombre = dtm.getValueAt(i, 0).toString();  
             if (nombre.equalsIgnoreCase(valorBuscado)) {
                 tbProductos.setRowSelectionInterval(i, i);
                 JOptionPane.showMessageDialog(null, "Producto encontrado: " + nombre);
@@ -268,94 +333,8 @@ public class ProductoPanel extends javax.swing.JPanel {
         }
     }
 
-    public void eliminarRegistro() {
-        filaSeleccionada = tbProductos.getSelectedRow(); 
-        if (filaSeleccionada >= 0) {
-            model.removeRow(filaSeleccionada); 
-            JOptionPane.showMessageDialog(null, "El producto ha sido eliminado correctamente.");
-            guardarProductos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila para eliminar.");
-        }
-        limpiarTb();
-        btnAgregar.setEnabled(true);
-    }
-
     
-    public void modificarRegistro() {
-        filaSeleccionada = tbProductos.getSelectedRow();
-        if (filaSeleccionada >= 0) {
-            
-            String nuevoNombre = txtNombrep.getText();
-            String nuevoPrecio = txtPreciop.getText();
-            String nuevaCantidad = txtCantidadp.getText();
-            
-            if (nuevoNombre.equals("") || nuevoPrecio.equals("") || nuevaCantidad.equals("")) {
-                JOptionPane.showMessageDialog(null, "Todos los campos deben estar completos.");
-            } else {
-                
-                tbProductos.setValueAt(nuevoNombre, filaSeleccionada, 0);
-                tbProductos.setValueAt(nuevoPrecio, filaSeleccionada, 1);
-                tbProductos.setValueAt(nuevaCantidad, filaSeleccionada, 2);
-
-                limpiarTb();
-
-                JOptionPane.showMessageDialog(null, "El producto ha sido modificado correctamente.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una fila para modificar.");
-        }
-    }
     
-    public void guardarProductos() {
-        File file = new File("Productos.csv");
-        try (FileWriter writer = new FileWriter(file)) {
-            for (int i = 0; i < model.getColumnCount(); i++) {
-                writer.write(model.getColumnName(i));
-                if (i < model.getColumnCount() - 1) writer.write(","); 
-            }
-            writer.write(System.lineSeparator()); 
-
-            for (int i = 0; i < model.getRowCount(); i++) {
-                for (int j = 0; j < model.getColumnCount(); j++) {
-                    writer.write(model.getValueAt(i, j).toString());
-                    if (j < model.getColumnCount() - 1) writer.write(","); // Separador de columnas
-                }
-                writer.write(System.lineSeparator()); // Nueva línea
-            }
-
-            //JOptionPane.showMessageDialog(null, "Productos guardados en Productos.csv correctamente.");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar los productos: " + e.getMessage());
-        }
-    }
-    
-    private void cargarProductos() {
-        File file = new File("Productos.csv");
-        if (!file.exists()) {
-            JOptionPane.showMessageDialog(null, "El archivo Productos.csv no existe.");
-            return; 
-        }
-        model.setRowCount(0); 
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] datos = line.split(","); 
-                model.addRow(datos); 
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los productos: " + e.getMessage());
-        }
-    }
-    
-    void limpiarTb(){
-        
-        txtNombrep.setText(null);
-        txtPreciop.setText(null);
-        txtCantidadp.setText(null);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

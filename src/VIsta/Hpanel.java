@@ -2,9 +2,14 @@
 package VIsta;
 
 
+import Controlador.Procesos;
 import Modelo.Habitacion;
+import Modelo.Producto;
+import java.awt.Color;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -115,14 +120,16 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
+        btnAgregarP.setBackground(new java.awt.Color(204, 255, 255));
         btnAgregarP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/coffee_product_icon_152092.png"))); // NOI18N
-        btnAgregarP.setText("Agregar Producto");
+        btnAgregarP.setText(" Producto");
         btnAgregarP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarPActionPerformed(evt);
             }
         });
 
+        btnCobrar.setBackground(new java.awt.Color(204, 255, 255));
         btnCobrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/US-dollar.png"))); // NOI18N
         btnCobrar.setText("Cobrar");
         btnCobrar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +138,7 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
+        btnHistorial.setBackground(new java.awt.Color(204, 255, 255));
         btnHistorial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/1486485531-activities-history-log-past-recent_81187.png"))); // NOI18N
         btnHistorial.setText("Historial");
         btnHistorial.addActionListener(new java.awt.event.ActionListener() {
@@ -139,6 +147,7 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
+        btnInicar.setBackground(new java.awt.Color(204, 255, 255));
         btnInicar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Enter_41039.png"))); // NOI18N
         btnInicar.setText("inciar");
         btnInicar.addActionListener(new java.awt.event.ActionListener() {
@@ -147,6 +156,8 @@ public class Hpanel extends javax.swing.JPanel {
             }
         });
 
+        btnMover.setBackground(new java.awt.Color(204, 255, 255));
+        btnMover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mover.png"))); // NOI18N
         btnMover.setText("Mover");
         btnMover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,16 +173,15 @@ public class Hpanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnInicar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAgregarP, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(btnInicar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnAgregarP)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnHistorial)
+                        .addGap(37, 37, 37)
                         .addComponent(btnCobrar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnMover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(72, 72, 72))
+                        .addGap(33, 33, 33)
+                        .addComponent(btnMover, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnHabitacion4, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
@@ -184,7 +194,7 @@ public class Hpanel extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnHabitacion6, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnHabitacion3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(52, 52, 52))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,16 +210,13 @@ public class Hpanel extends javax.swing.JPanel {
                     .addComponent(btnHabitacion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHabitacion6))
                 .addGap(126, 126, 126)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btnMover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAgregarP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInicar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCobrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(262, 262, 262))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInicar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCobrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMover))
+                .addGap(271, 271, 271))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -258,14 +265,47 @@ public class Hpanel extends javax.swing.JPanel {
 
                 // Verificar si la habitación es válida
                 if (habitacionSeleccionada != null) {
-                    // Llamar al método de agregar producto de la habitación seleccionada
-                    habitacionSeleccionada.agregarProducto();
+                    // Leer los productos desde el archivo
+                    ArrayList<Producto> listaProductos = Procesos.leerArchivoPorducto();
+
+                    // Crear un JComboBox con los nombres de los productos
+                    JComboBox<String> comboBox = new JComboBox<>();
+                    for (Producto producto : listaProductos) {
+                        comboBox.addItem(producto.getNombre()); // Agregar nombres de productos al JComboBox
+                    }
+
+                    // Mostrar el JComboBox en un cuadro de diálogo
+                    int opcion = JOptionPane.showConfirmDialog(null, comboBox, 
+                            "Seleccione un producto", JOptionPane.OK_CANCEL_OPTION);
+
+                    if (opcion == JOptionPane.OK_OPTION) {
+                        // Obtener el producto seleccionado
+                        String nombreProductoSeleccionado = (String) comboBox.getSelectedItem();
+                        
+                        // Solicitar la cantidad del producto
+                        String cantidadStr = JOptionPane.showInputDialog("Ingrese la cantidad:");
+                        if (cantidadStr != null) {
+                            int cantidad = Integer.parseInt(cantidadStr);
+
+                            // Buscar el producto en la lista y agregarlo a la habitación
+                            for (Producto producto : listaProductos) {
+                                if (producto.getNombre().equals(nombreProductoSeleccionado)) {
+                                    habitacionSeleccionada.agregarProducto(producto.getNombre(), cantidad);
+                                    JOptionPane.showMessageDialog(null, 
+                                            "Producto agregado exitosamente a la habitación.");
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "No se ha encontrado la habitación.");
                 }
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "El número de la habitación debe ser un valor numérico.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.getMessage());
         }
     }//GEN-LAST:event_btnAgregarPActionPerformed
 
@@ -275,16 +315,10 @@ public class Hpanel extends javax.swing.JPanel {
             if (numeroHabitacionStr != null && numeroHabitacionStr.matches("\\d+")) {
                 int numeroHabitacion = Integer.parseInt(numeroHabitacionStr);
                 Habitacion habitacionSeleccionada = asignarHabitacion(numeroHabitacion);
+                JButton botonHabitacion = obtenerBotonHabitacion(numeroHabitacion);
                 if (habitacionSeleccionada != null) {
-                    double total = habitacionSeleccionada.cobrar();
-                    if (total > 0.0) {
-                        DecimalFormat df = new DecimalFormat("#.00");
-                        JOptionPane.showMessageDialog(null, "El total a cobrar por la habitación " + numeroHabitacion + " es: $" + df.format(total), "Cobro realizado", JOptionPane.INFORMATION_MESSAGE);
-                        habitacionSeleccionada.reiniciar(obtenerBotonHabitacion(numeroHabitacion));
-                        
-                    } else {
-                        //JOptionPane.showMessageDialog(null, "El cobro ha sido cancelado.", "Cobro cancelado", JOptionPane.WARNING_MESSAGE);
-                    }
+                    habitacionSeleccionada.cobrar(botonHabitacion);
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "No se ha encontrado la habitación.");
                 }
@@ -318,7 +352,8 @@ public class Hpanel extends javax.swing.JPanel {
                 // Verificar si la habitación es válida
                 if (habitacionSeleccionada != null) {
                     // Mostrar el historial en el JTextArea
-                    textArea.setText(habitacionSeleccionada.mostrarHistorial());
+                    textArea.setText(habitacionSeleccionada.getHistorial().toString());
+
 
                     // Envolver el JTextArea en un JScrollPane
                     JScrollPane scrollPane = new JScrollPane(textArea);
@@ -373,7 +408,6 @@ public class Hpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInicarActionPerformed
 
     private void btnMoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActionPerformed
-       
         String hOrigen = JOptionPane.showInputDialog("Ingrese el número de la habitación:");
         String hDestino =JOptionPane.showInputDialog(null, "ingrese el numero de la habitacion destino");
         // Verificar si el usuario ha cancelado el cuadro de diálogo
@@ -391,7 +425,7 @@ public class Hpanel extends javax.swing.JPanel {
                     // Aquí pasas el número de habitación y el botón al método iniciarHabitacion
                     JButton botonHabitacionorigen = obtenerBotonHabitacion(nHOrigen);  // Método para obtener el botón correspondiente
                     JButton botonHabitaciondestino = obtenerBotonHabitacion(nHDestino);
-                    hOrigenSelec.mover(hDestinoSelec, hOrigenSelec, botonHabitacionorigen, botonHabitaciondestino);
+                    hOrigenSelec.mover(hOrigenSelec,hDestinoSelec, botonHabitacionorigen, botonHabitaciondestino);
                 } else {
                     JOptionPane.showMessageDialog(this, "No se ha encontrado la habitación.");
                 }

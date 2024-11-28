@@ -1,9 +1,10 @@
-
 package VIsta;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import Controlador.Procesos;
+import VIsta.Hpanel;
+import VIsta.ProductoPanel;
 import javax.swing.JOptionPane;
 
 
@@ -11,15 +12,17 @@ public class DashBorad extends javax.swing.JFrame {
     ProductoPanel pp;
     Hpanel hp;
     Procesos pro;
+    empleadoPanel ep;
+    private String cargo;
    
-    public DashBorad() {
-        pro=new Procesos();
+    public DashBorad(String cargo) {
+        this.cargo = cargo;
+        pro = new Procesos();
         initComponents();
-        String cargo = pro.getCargo();
-        txtUsuario.setText(cargo);
-        txtUsuario.setForeground(Color.WHITE);
-        hp=new Hpanel();
-        pp=new ProductoPanel();
+        txtUsuario.setText(cargo);  // Muestra el cargo del usuario
+        
+        hp = new Hpanel();
+        pp = new ProductoPanel(cargo);
         hp.setSize(910, 730);
         hp.setLocation(0, 0);   
         
@@ -27,7 +30,6 @@ public class DashBorad extends javax.swing.JFrame {
         content.add(hp, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-        
     }
 
 
@@ -42,6 +44,7 @@ public class DashBorad extends javax.swing.JFrame {
         btnHabitaciones = new javax.swing.JButton();
         btnProductos = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
         content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,16 +61,16 @@ public class DashBorad extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(702, Short.MAX_VALUE)
+                .addContainerGap(705, Short.MAX_VALUE)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addGap(33, 33, 33))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(16, 16, 16)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 910, 70));
@@ -117,16 +120,32 @@ public class DashBorad extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/M (1).png"))); // NOI18N
         jLabel3.setText("jLabel3");
 
+        btnRegistrar.setBackground(new java.awt.Color(51, 204, 255));
+        btnRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar-usuario.png"))); // NOI18N
+        btnRegistrar.setText("REGISTRAR EMPLEADOS");
+        btnRegistrar.setBorder(null);
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
             .addComponent(btnHabitaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(btnRegistrar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +156,9 @@ public class DashBorad extends javax.swing.JFrame {
                 .addComponent(btnHabitaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(195, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 800));
@@ -182,9 +203,7 @@ public class DashBorad extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHabitacionesActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-          
-        if (pro.getCargo() != null && pro.getCargo().contains("ADMIN")) {
-            
+            pp = new ProductoPanel(cargo); // Pasa el cargo al constructor
             pp.setSize(910, 730);
             pp.setLocation(0, 0);
 
@@ -192,11 +211,6 @@ public class DashBorad extends javax.swing.JFrame {
             content.add(pp, BorderLayout.CENTER);
             content.revalidate();
             content.repaint();
-        } else {
-            
-            JOptionPane.showMessageDialog(null,"El usuario no tiene permisos de administrador.");
-            
-        }
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void btnHabitacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHabitacionesMouseEntered
@@ -215,12 +229,30 @@ public class DashBorad extends javax.swing.JFrame {
         btnProductos.setBackground(new Color(51,204,255));
     }//GEN-LAST:event_btnProductosMouseExited
 
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        
+        //System.out.println(cargo);
+        if (cargo != null && cargo.equals("ADMINISTRADOR")) {
+            ep = new empleadoPanel();
+            ep.setSize(910, 730);
+            ep.setLocation(0, 0);
+
+            content.removeAll();
+            content.add(ep, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        } else {
+            JOptionPane.showMessageDialog(null, "El usuario no tiene permisos de administrador.");
+        }
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHabitaciones;
     private javax.swing.JButton btnProductos;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JPanel content;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

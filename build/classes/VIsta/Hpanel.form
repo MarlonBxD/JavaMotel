@@ -43,16 +43,15 @@
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="btnInicar" min="-2" pref="154" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAgregarP" min="-2" pref="175" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="btnHistorial" min="-2" pref="136" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnInicar" min="-2" pref="132" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="btnAgregarP" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="btnHistorial" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           <Component id="btnCobrar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnMover" max="32767" attributes="0"/>
-                          <EmptySpace min="72" pref="72" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="btnMover" min="-2" pref="130" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -71,7 +70,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace pref="50" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -91,19 +90,14 @@
                       <Component id="btnHabitacion6" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Component id="btnMover" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnAgregarP" alignment="3" max="32767" attributes="0"/>
-                          <Component id="btnInicar" alignment="3" max="32767" attributes="0"/>
-                          <Component id="btnHistorial" alignment="3" max="32767" attributes="0"/>
-                          <Component id="btnCobrar" max="32767" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnAgregarP" alignment="3" max="32767" attributes="0"/>
+                      <Component id="btnInicar" alignment="3" max="32767" attributes="0"/>
+                      <Component id="btnHistorial" alignment="3" max="32767" attributes="0"/>
+                      <Component id="btnCobrar" max="32767" attributes="0"/>
+                      <Component id="btnMover" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="262" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -214,10 +208,13 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnAgregarP">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagenes/coffee_product_icon_152092.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Agregar Producto"/>
+            <Property name="text" type="java.lang.String" value=" Producto"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarPActionPerformed"/>
@@ -225,6 +222,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCobrar">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagenes/US-dollar.png"/>
             </Property>
@@ -236,6 +236,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnHistorial">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagenes/1486485531-activities-history-log-past-recent_81187.png"/>
             </Property>
@@ -247,6 +250,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnInicar">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagenes/Enter_41039.png"/>
             </Property>
@@ -258,6 +264,12 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnMover">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="cc" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/mover.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Mover"/>
           </Properties>
           <Events>

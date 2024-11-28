@@ -6,13 +6,14 @@ public class ItemFactura {
     private Producto producto;
     private int cantidad;
     private double subtotal;
+    private long tiempo;
 
-    public ItemFactura() {
-    }
+   
      
-    public ItemFactura(Producto producto, int cantidad) {
+    public ItemFactura(Producto producto, int cantidad, long tiempo) {
         this.producto = producto;
         this.cantidad = cantidad;
+        this.tiempo = tiempo;
         this.subtotal = producto.getPrecio() * cantidad;
     }
 
@@ -39,6 +40,14 @@ public class ItemFactura {
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
+
+    public long getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(long tiempo) {
+        this.tiempo = tiempo;
+    }
     
     //Metodos
     public double calcularSubtotal() {
@@ -49,6 +58,7 @@ public class ItemFactura {
         return "Producto: " + producto.getNombre() +
                ", Cantidad: " + cantidad +
                ", Precio Unitario: " + producto.getPrecio() +
+                ", Tiempo: " + tiempo +
                ", Subtotal: " + calcularSubtotal();
     }
     

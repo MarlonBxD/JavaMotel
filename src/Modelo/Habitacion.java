@@ -1,27 +1,21 @@
 package Modelo;
 
-
-
+import Controlador.Procesos;
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import Modelo.Factura;
+import Modelo.Motel;
+import com.lowagie.text.DocumentException;
+import java.io.IOException;
 
 public class Habitacion {
-    // Atributos existentes
     private int numero;
     private int tiempoOcupacion;
     private List<String> productos;
@@ -32,9 +26,13 @@ public class Habitacion {
     private String placaVehiculo;
     private Timer timer;
     private Date fechaHoraInicio;
-    private double precioPorHora; // Atributo para el precio por hora
+    private double precioPorHora;
+    public ItemFactura itemf;
+    private static int secondsElapsed = 0;
 
-    // Constructor
+    public Habitacion() {
+    }
+    
     public Habitacion(int numero, String placaVehiculo) {
         this.numero = numero;
         this.tiempoOcupacion = 0;
@@ -44,10 +42,10 @@ public class Habitacion {
         this.startTime = 0;
         this.historial = new ArrayList<>();
         this.placaVehiculo = placaVehiculo;
-        this.precioPorHora = 12000.0; // Precio por defecto, pero se puede cambiar
+        this.precioPorHora = 12000.0;
     }
 
-    // Getters y Setters
+    // Métodos getters y setters...
 
     public int getNumero() {
         return numero;
@@ -128,8 +126,43 @@ public class Habitacion {
     public void setFechaHoraInicio(Date fechaHoraInicio) {
         this.fechaHoraInicio = fechaHoraInicio;
     }
+
+    public double getPrecioPorHora() {
+        return precioPorHora;
+    }
+
+    public void setPrecioPorHora(double precioPorHora) {
+        this.precioPorHora = precioPorHora;
+    }
+
+    public ItemFactura getItemf() {
+        return itemf;
+    }
+
+    public void setItemf(ItemFactura itemf) {
+        this.itemf = itemf;
+    }
+
+    // Método para iniciar la ocupación
+//    public void iniciar(String placa) {
+//        this.ocupada = true;
+//        this.fechaHoraInicio = new Date();
+//        this.startTime = System.currentTimeMillis();
+//        this.historial.add("Habitación ocupada el: " + fechaHoraInicio+ " con placa: "+placa);
+//        this.placaVehiculo=placa;
+//    }
     
-    // Métodos
+    public void reiniciar(JButton numhabitacion) {
+        tiempoOcupacion = 0;
+        productos.clear();
+        cantidades.clear(); // Si también deseas limpiar las cantidades asociadas a los productos
+        ocupada = false;
+        startTime = 0;
+        historial.clear(); // Limpiar el historial de cobros y productos consumidos
+        fechaHoraInicio = null; // Reiniciar la fecha de inicio
+        numhabitacion.setBackground(new Color(172, 255, 166));
+    }
+    
     public String tomarTiempoOcupacion() {
         if (ocupada) {
             long elapsedTime = (System.currentTimeMillis() / 1000) - startTime;
@@ -140,32 +173,8 @@ public class Habitacion {
         }
         return "00:00:00";
     }
-
-    public void reiniciar(JButton numhabitacion) {
-        tiempoOcupacion = 0;
-        productos.clear();
-        cantidades.clear(); // Si también deseas limpiar las cantidades asociadas a los productos
-        ocupada = false;
-        startTime = 0;
-        historial.clear(); // Limpiar el historial de cobros y productos consumidos
-        fechaHoraInicio = null; // Reiniciar la fecha de inicio
-        numhabitacion.setBackground(new Color(172, 255, 166));
-        
-        
-        
-    }
-
-    // Método para validar la placa
-    public boolean validarPlaca(String placa) {
-        return placa != null && placa.matches("[A-Za-z]{3}\\d{3}");
-    }
-
-    // Método para iniciar la habitación
-    public void setPrecioPorHora(double precioPorHora) {
-        this.precioPorHora = precioPorHora;
-    }
-
     
+    // Método para tomar el timepo de la ocupación
     public void iniciarHabitacion(int numeroHabitacion, JButton botonHabitacion) {
         if (botonHabitacion == null) {
             JOptionPane.showMessageDialog(null, "Error: El botón de la habitación no puede ser nulo.");
@@ -180,6 +189,9 @@ public class Habitacion {
                     JOptionPane.showMessageDialog(null, "La placa debe tener 3 letras seguidas de 3 números.");
                     return;
                 }
+                this.historial.add("Habitación ocupada el: " + fechaHoraInicio+ " con placa: "+placa);
+                this.placaVehiculo=placa.toUpperCase();
+                this.fechaHoraInicio = new Date();
                 this.placaVehiculo = placa;
                 this.ocupada = true;
                 botonHabitacion.setBackground(Color.BLUE);
@@ -209,259 +221,106 @@ public class Habitacion {
             }
         }
     }
-
-
+    // Método para finalizar la ocupación
+    public void finalizar() {
+        this.ocupada = false;
+        long endTime = System.currentTimeMillis()/ 1000;
+        this.tiempoOcupacion = (int) ((endTime - this.startTime) / 1000);
+        this.historial.add("Habitación desocupada después de: " + this.tiempoOcupacion + " horas");
+    }
     
-    // Método para mostrar el historial
-    public String mostrarHistorial() {
-        
-        StringBuilder sb = new StringBuilder();
-        sb.append("Número de habitación: ").append(numero).append("\n");
-        //sb.append("Fecha y hora de inicio: ").append(sdf.format(fechaHoraInicio)).append("\n");
-        sb.append("Productos consumidos:\n");
+    public boolean validarPlaca(String placa) {
+        return placa != null && placa.matches("[A-Za-z]{3}\\d{3}");
+    }
 
-        // Agregar los productos consumidos
-        for (int i = 0; i < productos.size(); i++) {
-            sb.append("- ").append(productos.get(i)).append(" (Cantidad: ").append(cantidades.get(i)).append(")\n");
+    // Método para agregar productos consumidos
+    public void agregarProducto(String producto, int cantidad) throws IOException {
+        this.productos.add(producto);
+        this.cantidades.add(cantidad);
+        this.historial.add("Producto agregado: " + producto + " Cantidad: " + cantidad);
+        Procesos.descExistencia(producto, cantidad);
+        try {
+            Producto prod = new Producto(producto, Procesos.obtenerPrecioProducto(producto), cantidad); // Crear objeto Producto
+            long tiempoActual = (System.currentTimeMillis() - this.startTime) / 1000; // Calcular tiempo en segundos
+            itemf = new ItemFactura(prod, cantidad, tiempoActual);
+            //this.itemsFactura.add(item);
+        } catch (Exception e) {
+            System.err.println("Error al agregar producto a la factura: " + e.getMessage());
         }
-
-        // Agregar los registros del historial (cobros realizados)
-        sb.append("\nHistorial de cobros:\n");
-        for (String registro : historial) {
-            sb.append(registro).append("\n");
-        }
-
-        return sb.toString();
     }
 
 
-    // Método para agregar un cobro al historial
-    public void agregarCobroAlHistorial(double totalPorTiempo, double totalProductos) {
-        DecimalFormat df = new DecimalFormat("#.00");
-        StringBuilder sb = new StringBuilder();
-        sb.append("Cobro realizado el ").append(new Date()).append("\n");
-        sb.append("Tiempo total: ").append(df.format(totalPorTiempo)).append("\n");
-        sb.append("Total por productos: ").append(df.format(totalProductos)).append("\n");
-        sb.append("Total a pagar: ").append(df.format(totalPorTiempo + totalProductos)).append("\n");
-        
-        // Añadir la información de los productos consumidos
-        sb.append("Productos consumidos:\n");
-        for (int i = 0; i < productos.size(); i++) {
-            sb.append("- ").append(productos.get(i))
-              .append(" (Cantidad: ").append(cantidades.get(i)).append(")\n");
+    // Método para calcular el costo total de la ocupación
+    public double calcularCostoTotal() {
+        double costoTotal = 0.0;
+
+        // Calcular el tiempo transcurrido en horas dinámicamente
+        if (ocupada) {
+            long elapsedTime = (System.currentTimeMillis() / 1000) - startTime; // Tiempo en segundos
+            double tiempoOcupacion = elapsedTime / 3600.0; // Convertir a horas (puede incluir fracciones)
+            costoTotal += tiempoOcupacion * this.precioPorHora; // Costo por tiempo de ocupación
         }
 
-        historial.add(sb.toString());
-    }
-
-    // Método para calcular el total y cobrar
-    
-    public double cobrar() {
-        DecimalFormat df = new DecimalFormat("#.00");
-        long tiempoTranscurrido = (System.currentTimeMillis() / 1000) - startTime;
-        double horas = tiempoTranscurrido / 3600.0;
-        double minutos = tiempoTranscurrido / 60.0;
-
-        // Verificar si el tiempo es menor o igual a 5 minutos
-        if (minutos <= 5) {
-            // Mostrar cuadro de confirmación
-            int confirmacion = JOptionPane.showConfirmDialog(null, 
-                "El tiempo de ocupación es de solo " + df.format(minutos) + " minutos. ¿Desea proceder con el cobro?", 
-                "Confirmar cobro", 
-                JOptionPane.YES_NO_OPTION);
-
-            // Si el usuario selecciona "No", cancelar el cobro
-            if (confirmacion == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(null, "Cobro cancelado.");
-                return 0.0;
-            }
-        }
-
-        // Si el tiempo es mayor a 5 minutos o el usuario confirma el cobro
-        double totalPorTiempo = horas * precioPorHora;
-        String archivoProductos = "Productos.csv";
         double totalProductos = 0.0;
 
-        StringBuilder detallesCobro = new StringBuilder();
-        detallesCobro.append("Detalles del cobro:\n");
-        detallesCobro.append("Tiempo transcurrido: ").append(df.format(horas)).append(" horas\n");
-        detallesCobro.append("Precio por tiempo: $").append(df.format(totalPorTiempo)).append("\n\n");
-        detallesCobro.append("Productos consumidos:\n");
+        // Calcular el costo total de los productos consumidos
+        for (int i = 0; i < productos.size(); i++) {
+            String nombreProducto = productos.get(i);
+            int cantidad = cantidades.get(i);
 
-        // Lista para almacenar los productos actualizados
-        ArrayList<String[]> productosActualizados = new ArrayList<>();
-
-        try {
-            // Leer productos desde el archivo
-            BufferedReader br = new BufferedReader(new FileReader(archivoProductos));
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                productosActualizados.add(linea.split(","));
+            try {
+                double precioProducto = Procesos.obtenerPrecioProducto(nombreProducto);
+                totalProductos += precioProducto * cantidad;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al obtener el precio del producto: " + nombreProducto + ". " + e.getMessage());
             }
-            br.close();
-
-            // Recorrer los productos consumidos y actualizar existencias
-            for (int i = 0; i < productos.size(); i++) {
-                String productoSeleccionado = productos.get(i);
-                int cantidadConsumida = cantidades.get(i);
-
-                // Buscar el producto en el archivo
-                boolean encontrado = false;
-                for (String[] producto : productosActualizados) {
-                    if (producto[0].equals(productoSeleccionado)) {
-                        double precio = Double.parseDouble(producto[1]);
-                        int existencia = Integer.parseInt(producto[2]);
-
-                        // Verificar que haya suficiente existencia
-                        if (cantidadConsumida <= existencia) {
-                            // Descontar la cantidad consumida
-                            producto[2] = String.valueOf(existencia - cantidadConsumida);
-                            double costoProducto = precio * cantidadConsumida;
-                            totalProductos += costoProducto;
-
-                            detallesCobro.append("- ").append(productoSeleccionado)
-                                         .append(" (Cantidad: ").append(cantidadConsumida)
-                                         .append(", Precio unitario: $").append(df.format(precio))
-                                         .append(", Total: $").append(df.format(costoProducto)).append(")\n");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "No hay suficiente existencia de " + productoSeleccionado);
-                            return 0.0;  // Si no hay suficiente stock, cancelamos el cobro
-                        }
-                        encontrado = true;
-                        break;
-                    }
-                }
-
-                // Si no encontramos el producto en el archivo
-                if (!encontrado) {
-                    JOptionPane.showMessageDialog(null, "Producto " + productoSeleccionado + " no encontrado en el inventario.");
-                    return 0.0;  // Si no se encuentra el producto, cancelamos el cobro
-                }
-            }
-
-            // Escribir los productos actualizados en el archivo
-            BufferedWriter bw = new BufferedWriter(new FileWriter(archivoProductos));
-            for (String[] producto : productosActualizados) {
-                bw.write(String.join(",", producto));
-                bw.newLine();
-            }
-            bw.close();
-
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al leer o escribir el archivo de productos: " + e.getMessage());
-            return 0.0;
         }
 
-        detallesCobro.append("\nTotal por productos: $").append(df.format(totalProductos));
-        detallesCobro.append("\nTotal a pagar: $").append(df.format(totalPorTiempo + totalProductos));
+        // Sumar el costo total de los productos al costo de la ocupación
+        costoTotal += totalProductos;
 
-        // Agregar la información al historial
-        agregarCobroAlHistorial(totalPorTiempo, totalProductos);
-
-        // Mostrar el cobro en el cuadro de diálogo
-        JOptionPane.showMessageDialog(null, detallesCobro.toString());
-        //historial.add(detallesCobro.toString());
-        return totalPorTiempo + totalProductos;
-    }
-
-
-    public static double obtenerPrecioProducto(String nombreProducto, String archivo) {
-        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String linea;
-            
-            // Leer cada línea del archivo CSV
-            while ((linea = br.readLine()) != null) {
-                // Separar los datos de cada línea por la coma
-                String[] datos = linea.split(",");
-                
-                // Asegurarse de que la línea tenga el formato adecuado
-                if (datos.length == 3) {
-                    String nombre = datos[0].trim();  // Nombre del producto
-                    double precio = Double.parseDouble(datos[1].trim());  // Precio del producto
-                    // int existencia = Integer.parseInt(datos[2].trim()); // Existencia (no utilizada en este caso)
-                    
-                    // Comparar el nombre del producto con el parámetro
-                    if (nombre.equalsIgnoreCase(nombreProducto)) {
-                        return precio;  // Devolver el precio si el nombre coincide
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        // Retornar -1 si el producto no se encuentra
-        return -1;  // Producto no encontrado
+        return costoTotal;
     }
 
     
-    public void agregarProducto() {
-        if (!ocupada) {
-            JOptionPane.showMessageDialog(null, "La habitación no está ocupada. No se pueden agregar productos.");
-            return;
+
+    // Método para generar la factura (opcional)
+    public String detalleFactura() {
+        StringBuilder factura = new StringBuilder();
+        long endTime = System.currentTimeMillis();
+        factura.append("Factura de la habitación: ").append(this.numero).append("\n");
+        factura.append("Placa del vehículo: ").append(this.placaVehiculo).append("\n");
+        factura.append("Tiempo de ocupación: ").append(tomarTiempoOcupacion()).append("\n");
+        factura.append("Productos consumidos:\n");
+        for (int i = 0; i < this.productos.size(); i++) {
+            factura.append(this.productos.get(i)).append(" x ").append(this.cantidades.get(i)).append("\n");
         }
+        factura.append("Costo total: ").append(calcularCostoTotal()).append("\n");
+        return factura.toString();
+    }
+    
+    public void cobrar(JButton boton) throws DocumentException {
+        // Calcular el costo total
+        double total = calcularCostoTotal();
 
-        ArrayList<String[]> productosDisponibles = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("Productos.csv"))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                // Suponemos que cada línea contiene: nombre, precio, existencia
-                String[] producto = linea.split(",");
-                productosDisponibles.add(producto);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al leer el archivo de productos: " + e.getMessage());
-            return;
-        }
+        // Detalle de la factura
+        String detalle = detalleFactura();
 
-        // Crear un JComboBox solo con los nombres de los productos
-        JComboBox<String> comboBox = new JComboBox<>();
-        for (String[] producto : productosDisponibles) {
-            comboBox.addItem(producto[0]); // Solo nombre
-        }
+        // Mostrar confirmación de cobro
+        int confirmar = JOptionPane.showConfirmDialog(null, "Total a pagar: $" + total + "\n¿Desea generar la factura?", "Confirmar Cobro", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            // Generar la factura usando la clase Factura
+            Factura factura = new Factura(this, new Date(), total);
+            factura.generarFacturaConTirilla();
 
-        int opcion = JOptionPane.showConfirmDialog(
-                null,
-                comboBox,
-                "Seleccione un producto:",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE
-        );
-
-        if (opcion == JOptionPane.OK_OPTION) {
-            String productoSeleccionado = (String) comboBox.getSelectedItem();
-            String cantidadStr = JOptionPane.showInputDialog("Ingrese la cantidad del producto:");
-
-            // Buscar existencia del producto seleccionado
-            String[] productoEncontrado = null;
-            for (String[] producto : productosDisponibles) {
-                if (producto[0].equals(productoSeleccionado)) {
-                    productoEncontrado = producto;
-                    break;
-                }
-            }
-
-            try {
-                int cantidad = Integer.parseInt(cantidadStr);
-                int existencia = Integer.parseInt(productoEncontrado[2]);
-
-                if (cantidad > 0 && cantidad <= existencia) {
-                    this.productos.add(productoSeleccionado);
-                    this.cantidades.add(cantidad);
-                    JOptionPane.showMessageDialog(null, "Producto agregado correctamente.");
-                } else if (cantidad > existencia) {
-                    JOptionPane.showMessageDialog(null, "La cantidad no puede ser mayor a la existencia del producto.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "La cantidad debe ser un número positivo.");
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Cantidad inválida. Debe ser un número.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto.");
+            // Finalizar ocupación y reiniciar la habitación
+            finalizar();
+            reiniciar(boton);
+            boton.setText("Habitación " + numero + " - Libre");
         }
     }
-      
+
+    
     public void mover(Habitacion habitacionDestino, Habitacion habitacionOrigen, JButton botonHabitacionOrigen, JButton botonHabitacionDestino) {
         if (habitacionOrigen.isOcupada()) {            
             habitacionDestino.setProductos(new ArrayList<>(habitacionOrigen.getProductos()));            
@@ -489,11 +348,5 @@ public class Habitacion {
             }, 0, 1000); // Actualizar cada segundo
         }
     }
-
-
-
-
     
-
 }
-

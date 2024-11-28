@@ -1,24 +1,29 @@
-
 package Modelo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.swing.JOptionPane;
 
 public class Motel {
     private String nombre;
     private String direccion;
-    private static List<Habitacion> habitaciones = new ArrayList<>(); // Lista estática de habitaciones
-    private List<Object[]> reservas = new ArrayList<>();
-    private List<Object[]> productos = new ArrayList<>();
+    private List<Habitacion> habitaciones; 
+    private List<Object[]> reservas;
+    private List<Producto> productos;
 
+    public Motel() {
+    }
+    
     public Motel(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
-        inicializarHabitaciones(); // Llamar al método para inicializar habitaciones
+        this.habitaciones = new ArrayList<>();
+        this.reservas = new ArrayList<>();
+        this.productos = new ArrayList<>();
     }
-    //Getters and Setters
+
+    // Getters and Setters
 
     public String getNombre() {
         return nombre;
@@ -36,7 +41,7 @@ public class Motel {
         this.direccion = direccion;
     }
 
-    public static List<Habitacion> getHabitaciones() {
+    public List<Habitacion> getHabitaciones() {
         return habitaciones;
     }
 
@@ -51,22 +56,21 @@ public class Motel {
     public void setReservas(List<Object[]> reservas) {
         this.reservas = reservas;
     }
-    
 
-    public void setProductos(List<Object[]> productos) {
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
-    //meoto para agregar una habitacion 
-    private static void inicializarHabitaciones() {
-        if (habitaciones.isEmpty()) { // Solo inicializa si la lista está vacía
-            for (int i = 1; i <= 6; i++) {
-                habitaciones.add(new Habitacion(i, ""));
-            }
-        }
+
+    // Método para agregar una habitación
+    public void agregarHabitacion(Habitacion habitacion) {
+        habitaciones.add(habitacion);
     }
 
-
-    //meotodo para hacer una reserva
+    // Método para realizar una reserva
     public void realizarReserva(Habitacion habitacion, LocalDate fechaInicio, LocalDate fechaFin) {
         boolean disponible = true;
 
@@ -76,29 +80,24 @@ public class Motel {
             LocalDate inicio = (LocalDate) r[1];
             LocalDate fin = (LocalDate) r[2];
 
-            if (h.equals(habitacion) && 
-                (inicio.isBefore(fechaFin) && fin.isAfter(fechaInicio))) {
+            if (h.equals(habitacion) && (inicio.isBefore(fechaFin) && fin.isAfter(fechaInicio))) {
                 disponible = false;
                 break;
             }
         }
 
         if (disponible) {
-            // Almacena la reserva como un arreglo de objetos
             reservas.add(new Object[]{habitacion, fechaInicio, fechaFin});
-            System.out.println("Reserva realizada exitosamente.");
+            JOptionPane.showMessageDialog(null, "Reserva realizada exitosamente.");
         } else {
-            System.out.println("La habitación no está disponible para las fechas solicitadas.");
+            JOptionPane.showMessageDialog(null, "La habitación no está disponible para las fechas solicitadas.");
         }
     }
-
-
 
     // Método para cancelar una reserva
     public void cancelarReserva(Habitacion habitacion, LocalDate fechaInicio, LocalDate fechaFin) {
         boolean cancelada = false;
 
-        // Buscar la reserva y eliminarla
         for (Object[] r : reservas) {
             Habitacion h = (Habitacion) r[0];
             LocalDate inicio = (LocalDate) r[1];
@@ -117,9 +116,22 @@ public class Motel {
         }
     }
 
-
-    
-  
-    
+    // Método para listar todas las habitaciones
+    public void listarHabitaciones() {
+        for (Habitacion habitacion : habitaciones) {
+            System.out.println("Habitación número: " + habitacion.getNumero());
+            System.out.println("Estado: " + (habitacion.isOcupada() ? "Ocupada" : "Libre"));
+            System.out.println("Placa del vehículo: " + habitacion.getPlacaVehiculo());
+            System.out.println("--------------------------------");
+        }
+    }
+    // Método para buscar una habitación por su número
+    private Habitacion buscarHabitacion(int numero) {
+        for (Habitacion habitacion : habitaciones) {
+            if (habitacion.getNumero() == numero) {
+                return habitacion;
+            }
+        }
+        return null;
+    }
 }
-
