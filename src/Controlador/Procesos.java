@@ -3,6 +3,7 @@ package Controlador;
 
 import Modelo.Empleado;
 import Modelo.Producto;
+import Modelo.Transacciones;
 import VIsta.DashBorad;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -115,7 +116,65 @@ public class Procesos {
         return listaEmpleado;
     }
 
+    public static void guardarTransaccion(ArrayList<Transacciones> listt) throws IOException {
+        File directorio = new File("."); // Patch
+        File f = new File(directorio, "transacciones.csv"); // Crear el archivo f es el flujo
+
+        // Abrir el archivo en modo append
+        FileWriter fw = new FileWriter(f, true); // true habilita el modo append
+        BufferedWriter bw = new BufferedWriter(fw); // Flujo bw
+
+        // Agregar las transacciones al archivo
+        for (Transacciones tr : listt) {
+            bw.write(tr.getFecha() + "," + tr.getHabitacion() + "," +
+                     tr.getPlaca() + "," + tr.getTiempo() + "," +
+                     tr.getTotal() + "\n");
+        }
+        bw.close();
+    }
+
     
+    public static ArrayList<Transacciones> leerTransacciones() throws IOException {
+        File directorio = new File("."); // Directorio actual
+        File f = new File(directorio, "transacciones.csv"); // Crear el archivo (flujo)
+
+        // Verificar si el archivo existe
+        if (!f.exists()) {
+            System.out.println("El archivo transacciones.csv no existe.");
+            return new ArrayList<>();
+        }
+
+        FileReader fr = new FileReader(f); // Flujo de lectura
+        BufferedReader br = new BufferedReader(fr); // Flujo bufferizado
+        ArrayList<Transacciones> listtr = new ArrayList<>();
+
+        String linea = br.readLine(); // Leer la primera línea
+        while (linea != null) {
+            try {
+                // Dividir la línea en campos
+                String vector[] = linea.split(",");
+                if (vector.length >= 5) {
+                    // Crear el objeto Transacciones solo si los valores están presentes y son válidos
+                    Transacciones tr = new Transacciones(
+                        vector[0].trim(), // Fecha
+                        Integer.parseInt(vector[1].trim()), // Habitación (convertir a entero)
+                        vector[2].trim(), // Placa
+                        vector[3].trim(), // Tiempo
+                        Double.parseDouble(vector[4].trim()) // Total (convertir a doble)
+                    );
+                    listtr.add(tr);
+                } else {
+                    // Opcional: Imprimir una advertencia para líneas mal formateadas
+                    System.out.println("Línea mal formateada: " + linea);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error de formato en la línea: " + linea + " - " + e.getMessage());
+            }
+            linea = br.readLine(); // Leer la siguiente línea
+        }
+        br.close(); // Cerrar el lector
+        return listtr;
+    }
     
     public boolean iniciar(String nombre, String contrasena) {
         File fileEmpleado = new File("empleados.csv");     
@@ -185,6 +244,18 @@ public class Procesos {
 
         // Guardar los cambios en el archivo
         guardarProducto(listaProductos);
+    }
+    
+    public static void limpiarTransacciones() throws IOException {
+        File directorio = new File(".");
+        File f = new File(directorio, "transacciones.csv");
+
+        if (f.exists()) {
+            // Sobreescribir el archivo con un contenido vacío
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
+                bw.write("");
+            }
+        }
     }
 
 

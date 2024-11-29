@@ -5,18 +5,25 @@
 package VIsta;
 
 import Controlador.Procesos;
-import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 
 
 public class Login extends javax.swing.JFrame {
     Procesos pro=new Procesos();
-    /**
-     * Creates new form Login
-     */
+    private String horaincio;
+    
     public Login() {
         initComponents();
     }
+
+    public String getHoraincio() {
+        return horaincio;
+    }
+
+      
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,8 +146,9 @@ public class Login extends javax.swing.JFrame {
 
     private void btniniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btniniciarActionPerformed
         String contra = new String(txtcontra.getPassword());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            this.horaincio = sdf.format(new Date());
         boolean inicioExitoso = pro.iniciar(txtusuario.getText(), contra); // Llama al método y guarda el resultado
-
         // Solo cerrar la ventana si el inicio fue exitoso
         if (inicioExitoso) {
             this.dispose();

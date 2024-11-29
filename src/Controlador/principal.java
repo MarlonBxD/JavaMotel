@@ -8,7 +8,6 @@ public class principal {
         Login lg=new Login();
         lg.setVisible(true);
         lg.setLocationRelativeTo(null);
-        
-                
+                        
     }
 }

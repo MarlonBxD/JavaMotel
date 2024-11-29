@@ -1,6 +1,7 @@
 package Modelo;
 
 
+import Controlador.Procesos;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
@@ -24,7 +25,8 @@ public class Factura {
     private Date fecha;
     private double total;
     private List<ItemFactura> items = new ArrayList<>();
-
+    private List<Transacciones> listt;
+    Transacciones t;
     // Constructores
     public Factura() {
     }
@@ -33,6 +35,7 @@ public class Factura {
         this.habitacion = habitacion;
         this.fecha = fecha;
         this.total = total;
+        listt = new ArrayList<>();
     }
 
     // Getters y Setters
@@ -93,10 +96,10 @@ public class Factura {
         total = 0;
     } 
 
-    public void generarFacturaConTirilla() throws DocumentException {
+    public void generarFacturaConTirilla() throws DocumentException, IOException {
         String archivoNumeroFactura = "NumeroFactura.txt";
         int numeroFactura = leerYActualizarNumeroFactura(archivoNumeroFactura);
-
+        
         // Formatear la fecha
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String fechaFormateada = sdf.format(new Date());
@@ -107,13 +110,14 @@ public class Factura {
                .append("         FACTURA N° ").append(numeroFactura).append("\n")
                .append("====================================\n")
                .append("Habitación: ").append(habitacion.getNumero()).append("\n")
-               .append("Placa del vehículo: ").append(habitacion.getPlacaVehiculo().toUpperCase()).append("\n")
+               .append("Placa del vehículo: ").append(habitacion.getPlacaVehiculo()).append("\n")
                .append("Tiempo: ").append(habitacion.tomarTiempoOcupacion()).append("\n")
                .append("Fecha: ").append(fechaFormateada).append("\n")
                .append("====================================\n")
                .append("Items:\n")
                .append("Producto         Cantidad\n");
-
+        
+        
         // Iterar sobre los productos y sus cantidades
         List<String> productos = habitacion.getProductos();
         List<Integer> cantidades = habitacion.getCantidades();
@@ -122,20 +126,36 @@ public class Factura {
         }
 
         tirilla.append("====================================\n")
-               .append("TOTAL: $").append(String.format("%.2f", getTotal())).append("\n")
+               .append("TOTAL: $").append(String.format("%.2f", habitacion.calcularCostoTotal())).append("\n")
                .append("====================================\n")
                .append("      ¡Gracias por su visita!      \n")
                .append("====================================\n")
-               .append("                 MotelApp             \n");
+               .append("              MotelApp             \n");
 
         // Guardar factura en PDF
         guardarFacturaComoPdf(numeroFactura, fechaFormateada, tirilla.toString());
-
+        enviarTransaccion();
         // Enviar la tirilla a la impresora
         imprimirTirilla(tirilla.toString());
     }
 
-
+    public void enviarTransaccion(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String fechaFormateada = sdf.format(new Date());
+        t=new Transacciones();
+        t.setFecha(fechaFormateada);
+        t.setHabitacion(habitacion.getNumero());
+        t.setPlaca(habitacion.getPlacaVehiculo());
+        t.setTiempo(habitacion.tomarTiempoOcupacion());
+        t.setTotal(habitacion.calcularCostoTotal());
+        listt.add(t);
+        try {
+               Procesos.guardarTransaccion((ArrayList<Transacciones>) listt);
+        } catch (IOException e) {
+            e.printStackTrace(); // Muestra el error en la consola (opcional)
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al procesar el documento PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private int leerYActualizarNumeroFactura(String archivo) {
         int numeroFactura = 1;
